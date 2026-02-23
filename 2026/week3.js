@@ -52,3 +52,60 @@ const maxArea = (heights) => {
         }
         return max
     }
+
+
+const trap = (height) => {
+    let left = 0, right = height.length - 1;
+    let leftMax = 0, rightMax = 0;
+    let water = 0;
+
+    while (left < right) {
+        if (height[left] < height[right]) {
+            if (height[left] >= leftMax) {
+                leftMax = height[left];
+            } else {
+                water += leftMax - height[left];
+            }
+            left++;
+        } else {
+            if (height[right] >= rightMax) {
+                rightMax = height[right];
+            } else {
+                water += rightMax - height[right];
+            }
+            right--;
+        }
+    }
+
+    return water;
+}
+
+
+const threeSum = (nums) => {
+        nums.sort((a, b) => a - b);
+        const res = [];
+
+        for (let i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+            let l = i + 1;
+            let r = nums.length - 1;
+            while (l < r) {
+                const sum = nums[i] + nums[l] + nums[r];
+                if (sum > 0) {
+                    r--;
+                } else if (sum < 0) {
+                    l++;
+                } else {
+                    res.push([nums[i], nums[l], nums[r]]);
+                    l++;
+                    r--;
+                    while (l < r && nums[l] === nums[l - 1]) {
+                        l++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
